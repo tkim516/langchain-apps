@@ -1,0 +1,4 @@
+.env
+__pycache__
+devscribe
+.DS_Store
