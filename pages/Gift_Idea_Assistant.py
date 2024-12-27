@@ -9,6 +9,7 @@ st.set_page_config(page_title="Gift Idea Assistant",
 st.markdown("<h1 style='text-align: center; color: #57cfff;'>Gift Idea Assistant</h1>", unsafe_allow_html=True)
 
 check_openai_api_key(st.session_state)
+api_key = st.session_state['OPENAI_API_KEY']
 
 with st.sidebar.form("input_form"):
     recipient_hobbies = st.text_input("Recipient's Hobbies", placeholder="Reading, Cooking")

@@ -1,17 +1,12 @@
-from langchain_openai import ChatOpenAI
-from langchain_openai import OpenAIEmbeddings
+from langchain.chat_models import ChatOpenAI
+from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.document_loaders import YoutubeLoader
 from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
 from langchain_pinecone import PineconeVectorStore
-from pinecone import Pinecone, ServerlessSpec
+from pinecone import Pinecone
 from langchain_community.document_loaders import PyPDFLoader
 from tempfile import NamedTemporaryFile
-import time
-from dotenv import load_dotenv
 import os
-from io import BytesIO
 
 
 def add_pdf_to_db(uploaded_file):

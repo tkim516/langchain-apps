@@ -1,4 +1,4 @@
-from langchain_openai import ChatOpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 
 def generate_gifts(recipient_hobbies, recipient_age, relationship, occasion, budget, api_key):

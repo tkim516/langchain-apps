@@ -69,7 +69,6 @@ numpy==1.26.4
     #   langchain-pinecone
 orjson==3.10.12
     # via langsmith
-openai==1.58.1
 packaging==24.2
     # via langchain-core
 pinecone-client==5.0.1
