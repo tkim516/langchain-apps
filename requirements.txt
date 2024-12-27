@@ -7,7 +7,9 @@ langchain_pinecone==0.2.0
 langchain_text_splitters==0.3.4
 openai==1.58.1
 pandas==2.2.3
-pinecone==5.4.2
+pinecone-client==5.0.1
+pinecone-plugin-inference<2.0.0,>=1.0.3
 python-dotenv==1.0.1
 streamlit==1.39.0
 streamlit_pdf_viewer==0.0.19
+
