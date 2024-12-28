@@ -1,5 +1,5 @@
 from langchain.chat_models import ChatOpenAI
-from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
 from langchain_pinecone import PineconeVectorStore
@@ -7,10 +7,14 @@ from pinecone import Pinecone
 from langchain_community.document_loaders import PyPDFLoader
 from tempfile import NamedTemporaryFile
 import os
+import streamlit as st
 
 
 def add_pdf_to_db(uploaded_file):
-  embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
+  embeddings = OpenAIEmbeddings(
+      model="text-embedding-3-large",
+      openai_api_key=st.session_state.get('OPENAI_API_KEY', '')
+  )
 
   pc = Pinecone(api_key=os.environ.get('PINECONE_API_KEY'))
   index_name = "pdf-embeddings"

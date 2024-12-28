@@ -7,12 +7,15 @@ from langchain.chains import LLMChain
 from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone, ServerlessSpec
 import time
+import streamlit
 from dotenv import load_dotenv
 import os
 
 def add_transcipt_to_db(video_url: str):
-  embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-  print(embeddings)
+  embeddings = OpenAIEmbeddings(
+    model="text-embedding-3-large",
+    openai_api_key=st.session_state.get('OPENAI_API_KEY', '')
+  )
 
   pc = Pinecone(api_key=os.environ.get('PINECONE_API_KEY'))
   index_name = "youtube-assistant"
