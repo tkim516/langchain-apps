@@ -12,4 +12,4 @@ pinecone-plugin-inference<2.0.0,>=1.0.3
 python-dotenv==1.0.1
 streamlit==1.39.0
 streamlit_pdf_viewer==0.0.19
-
+pypdf==5.1.0
