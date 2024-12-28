@@ -7,7 +7,7 @@ from langchain.chains import LLMChain
 from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone, ServerlessSpec
 import time
-import streamlit
+import streamlit as st
 from dotenv import load_dotenv
 import os
 
