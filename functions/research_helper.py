@@ -13,7 +13,7 @@ import streamlit as st
 def add_pdf_to_db(uploaded_file):
   embeddings = OpenAIEmbeddings(
       model="text-embedding-3-large",
-      openai_api_key=st.session_state.get('OPENAI_API_KEY', '')
+      openai_api_key=os.environ.get("OPENAI_API_KEY")
   )
 
   pc = Pinecone(api_key=os.environ.get('PINECONE_API_KEY'))

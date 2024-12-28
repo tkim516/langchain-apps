@@ -1,5 +1,6 @@
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
+import os
 
 def generate_gifts(recipient_hobbies, recipient_age, relationship, occasion, budget, api_key):
     """
@@ -16,7 +17,7 @@ def generate_gifts(recipient_hobbies, recipient_age, relationship, occasion, bud
     Returns:
         str: Generated gift suggestions.
     """
-    llm = ChatOpenAI(model="gpt-4", temperature=0.5, openai_api_key=api_key)
+    llm = ChatOpenAI(model="gpt-4", temperature=0.5, openai_api_key=os.environ.get("OPENAI_API_KEY"))
     
     prompt = PromptTemplate(
         template="""

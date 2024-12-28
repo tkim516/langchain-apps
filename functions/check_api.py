@@ -1,14 +1,15 @@
 import openai
 import streamlit as st
 import time
+import os
 
 def check_openai_api_key(session_state):
   
   if 'OPENAI_API_KEY' not in session_state:
     st.session_state['OPENAI_API_KEY'] = None
   
-  def validate_key(api_key):
-    client = openai.OpenAI(api_key=api_key)
+  def validate_key(user_api_key):
+    client = openai.OpenAI(api_key=user_api_key)
     try:
         client.models.list()
     except openai.AuthenticationError:
@@ -24,6 +25,7 @@ def check_openai_api_key(session_state):
 
       if validate_key(open_api_key):
           st.session_state['OPENAI_API_KEY'] = open_api_key
+          os.environ['OPENAI_API_KEY'] = st.session_state['OPENAI_API_KEY']
           st.success("API key successfully stored!")
           time.sleep(1)
           st.rerun()

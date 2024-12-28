@@ -14,7 +14,7 @@ import os
 def add_transcipt_to_db(video_url: str):
   embeddings = OpenAIEmbeddings(
     model="text-embedding-3-large",
-    openai_api_key=st.session_state.get('OPENAI_API_KEY', '')
+    openai_api_key=os.environ.get("OPENAI_API_KEY")
   )
 
   pc = Pinecone(api_key=os.environ.get('PINECONE_API_KEY'))
