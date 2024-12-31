@@ -10,6 +10,7 @@ import time
 import streamlit as st
 from dotenv import load_dotenv
 import os
+from langchain.schema import Document  # Import the Document class
 
 def add_transcipt_to_db(video_url: str):
   embeddings = OpenAIEmbeddings(
@@ -31,12 +32,24 @@ def add_transcipt_to_db(video_url: str):
       add_start_index=True)
   
   all_splits = text_splitter.split_documents(transcript)
-  _ = vector_store.add_documents(documents=all_splits)
+
+    # Convert splits into Document objects
+  documents = [
+      Document(page_content=split.page_content, metadata={"video_url": video_url, "chunk_index": i})
+      for i, split in enumerate(all_splits)
+  ]
+
+  _ = vector_store.add_documents(documents=documents)
 
   return vector_store
 
-def get_response_from_query(vector_store, query, k=4):
-  retrieved_docs = vector_store.similarity_search(query, k=k)
+def get_response_from_query(vector_store, query, video_url, k=4):
+  
+  retrieved_docs = vector_store.similarity_search(
+    query, 
+    k=k, 
+    filter={"video_url": video_url})
+  
   retrieved_content = "\n\n".join(doc.page_content for doc in retrieved_docs)
 
   llm = ChatOpenAI(model="gpt-4o-mini")
