@@ -62,8 +62,6 @@ def get_response_from_query(vector_store, query, video_url, k=4):
     Answer this question: {question}
 
     Use this segment of the video's transcript: {context}
-
-    If you do not have enough information to answer the question, reply with "I don't have enough information to answer your question.".
     """
   )
 
