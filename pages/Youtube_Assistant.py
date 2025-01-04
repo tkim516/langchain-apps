@@ -21,7 +21,6 @@ if submit_button:
   st.write(url_input)
   st.write(question_input)
   db = lch.add_transcipt_to_db(url_input)
-  st.write(db)
   response = lch.get_response_from_query(db, question_input, url_input)
   st.write(response.content)
 

@@ -38,7 +38,6 @@ def add_transcipt_to_db(video_url: str):
       Document(page_content=split.page_content, metadata={"video_url": video_url, "chunk_index": i})
       for i, split in enumerate(all_splits)
   ]
-
   _ = vector_store.add_documents(documents=documents)
 
   return vector_store
