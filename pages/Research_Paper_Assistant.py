@@ -3,6 +3,8 @@ from streamlit_pdf_viewer import pdf_viewer
 import functions.research_helper as lch
 from functions.check_api import check_openai_api_key
 from io import BytesIO
+from functions.initialize_db import initialize_vector_store
+from functions.generate_unique_id import generate_unique_id
 
 st.set_page_config(page_title="Research Paper Assistant", 
                    page_icon="📝",
@@ -28,7 +30,10 @@ elif example_pdf_file == 'TensorFlow':
 
 if pdf_file:
   binary_data = pdf_file.read()
+  id_pdf_file = generate_unique_id()
+
   pdf_viewer(input=binary_data, width=1200)
+
 else:
     st.write("Please upload a PDF or select an example paper.")
 
@@ -40,8 +45,8 @@ with st.sidebar:
     if submit_button:
       if pdf_file:
         st.header('Response')
-        db = lch.add_pdf_to_db(pdf_file)
-        response = lch.get_response_from_query(db, question_input)      
+        db = lch.add_pdf_to_db(pdf_file, id_pdf_file)
+        response = lch.get_response_from_query(db, question_input, id_pdf_file)      
         st.write(response.content)
       else:
          st.write('Upload a PDF first!')

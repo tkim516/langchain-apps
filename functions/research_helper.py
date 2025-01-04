@@ -6,11 +6,12 @@ from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone
 from langchain_community.document_loaders import PyPDFLoader
 from tempfile import NamedTemporaryFile
+from langchain.schema import Document  # Import the Document class
 import os
 import streamlit as st
 
 
-def add_pdf_to_db(uploaded_file):
+def add_pdf_to_db(uploaded_file, upload_id):
   embeddings = OpenAIEmbeddings(
       model="text-embedding-3-large",
       openai_api_key=os.environ.get("OPENAI_API_KEY")
@@ -19,7 +20,9 @@ def add_pdf_to_db(uploaded_file):
   pc = Pinecone(api_key=os.environ.get('PINECONE_API_KEY'))
   index_name = "pdf-embeddings"
   index = pc.Index(index_name)
+
   vector_store = PineconeVectorStore(embedding=embeddings, index=index)
+
 
   with NamedTemporaryFile(delete=False, suffix=".pdf") as temp_file:
         temp_file.write(uploaded_file.getbuffer())
@@ -40,16 +43,28 @@ def add_pdf_to_db(uploaded_file):
         )
         all_splits = text_splitter.split_documents(pages)
 
-        # Add the chunks to the vector store
-        _ = vector_store.add_documents(documents=all_splits)
+
+        # Convert splits into Document objects
+        documents = [
+            Document(page_content=split.page_content, metadata={"upload_id": upload_id, "chunk_index": i})
+            for i, split in enumerate(all_splits)
+        ]
+
+        _ = vector_store.add_documents(documents=documents)
 
         return vector_store
+  
   finally:
         # Clean up: delete the temporary file
         os.remove(temp_file_path)
 
-def get_response_from_query(vector_store, query, k=4):
-  retrieved_docs = vector_store.similarity_search(query, k=k)
+def get_response_from_query(vector_store, query, upload_id, k=4):
+  retrieved_docs = vector_store.similarity_search(
+      query, 
+      k=k, 
+      filter={"upload_id": upload_id}
+  )
+  
   retrieved_content = "\n\n".join(doc.page_content for doc in retrieved_docs)
 
   llm = ChatOpenAI(model="gpt-4o-mini")
@@ -62,8 +77,6 @@ def get_response_from_query(vector_store, query, k=4):
     Answer this question: {question}
 
     Use this segment of the uploaded PDF: {context}
-
-    If you do not have enough information to answer the question, reply with "I don't have enough information to answer your question.".
     """
   )
 
@@ -74,7 +87,6 @@ def get_response_from_query(vector_store, query, k=4):
   response = llm.invoke(message)
 
   return response
-
 
   
 
