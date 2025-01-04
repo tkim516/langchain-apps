@@ -3,7 +3,6 @@ from streamlit_pdf_viewer import pdf_viewer
 import functions.research_helper as lch
 from functions.check_api import check_openai_api_key
 from io import BytesIO
-from functions.initialize_db import initialize_vector_store
 from functions.generate_unique_id import generate_unique_id
 
 st.set_page_config(page_title="Research Paper Assistant", 

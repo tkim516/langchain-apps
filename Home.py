@@ -17,7 +17,6 @@ from pinecone import Pinecone
 pinecone_api_key = os.environ.get('PINECONE_API_KEY', '')
 if not pinecone_api_key:
     raise ValueError("PINECONE_API_KEY environment variable is not set.")
-pc = Pinecone(api_key=pinecone_api_key)
 
 st.header('Research Paper Assistant')
 st.subheader('Upload a PDF and ask questions about the paper. Built with LangChain and Pinecone')
