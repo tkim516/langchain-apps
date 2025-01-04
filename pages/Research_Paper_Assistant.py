@@ -9,7 +9,7 @@ st.set_page_config(page_title="Research Paper Assistant",
                    page_icon="📝",
                    layout="wide")
 
-st.markdown("<h1 style='text-align: center; color: #57cfff;'>Research Paper Helper</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #57cfff;'>Research Paper Assistant</h1>", unsafe_allow_html=True)
 
 check_openai_api_key(st.session_state)
 

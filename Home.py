@@ -6,7 +6,7 @@ st.set_page_config(page_title="Practice LangChain Apps",
                    page_icon="",
                    layout="wide")
 
-st.markdown("<h1 style='text-align: center; color: #57cfff;'>Tyler's LangChain Apps</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #57cfff;'>Practice LangChain Apps</h1>", unsafe_allow_html=True)
 
 # Check if API key is stored in session state
 check_openai_api_key(st.session_state)
