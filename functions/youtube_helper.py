@@ -38,6 +38,8 @@ def add_transcipt_to_db(video_url: str):
       Document(page_content=split.page_content, metadata={"video_url": video_url, "chunk_index": i})
       for i, split in enumerate(all_splits)
   ]
+  with st.expander("Show Chunked Transcript"):
+    st.write(documents)
   _ = vector_store.add_documents(documents=documents)
 
   return vector_store
@@ -50,6 +52,8 @@ def get_response_from_query(vector_store, query, video_url, k=4):
     filter={"video_url": video_url})
   
   retrieved_content = "\n\n".join(doc.page_content for doc in retrieved_docs)
+  with st.expander("Show Retrieved Content"):
+    st.write(retrieved_content)
 
   llm = ChatOpenAI(model="gpt-4o-mini")
 
