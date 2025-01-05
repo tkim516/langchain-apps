@@ -38,14 +38,14 @@ else:
 
 with st.sidebar:
     with st.form("input_form"):
-      question_input = st.text_area('Your Question')
+      question_input = st.text_area('Your Question', value='What is the paper about?')
       submit_button = st.form_submit_button('Submit')
 
     if submit_button:
       if pdf_file:
-        st.header('Response')
         db = lch.add_pdf_to_db(pdf_file, id_pdf_file)
-        response = lch.get_response_from_query(db, question_input, id_pdf_file)      
+        response = lch.get_response_from_query(db, question_input, id_pdf_file)   
+        st.header('Response')   
         st.write(response.content)
       else:
          st.write('Upload a PDF first!')

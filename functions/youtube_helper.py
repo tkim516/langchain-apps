@@ -33,7 +33,7 @@ def add_transcipt_to_db(video_url: str):
   
   all_splits = text_splitter.split_documents(transcript)
 
-    # Convert splits into Document objects
+  # Convert splits into Document objects
   documents = [
       Document(page_content=split.page_content, metadata={"video_url": video_url, "chunk_index": i})
       for i, split in enumerate(all_splits)

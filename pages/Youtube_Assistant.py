@@ -3,7 +3,7 @@ import functions.youtube_helper as lch
 from functions.check_api import check_openai_api_key
 
 st.set_page_config(page_title="YouTube Assistant", 
-                   page_icon="🤖",
+                   page_icon="🎥",
                    layout="wide")
 
 st.markdown("<h1 style='text-align: center; color: #57cfff;'>YouTube Assistant</h1>", unsafe_allow_html=True)

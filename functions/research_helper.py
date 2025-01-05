@@ -43,12 +43,14 @@ def add_pdf_to_db(uploaded_file, upload_id):
         )
         all_splits = text_splitter.split_documents(pages)
 
-
         # Convert splits into Document objects
         documents = [
             Document(page_content=split.page_content, metadata={"upload_id": upload_id, "chunk_index": i})
             for i, split in enumerate(all_splits)
         ]
+
+        with st.expander("Show Chunked Document"):
+          st.write(documents)
 
         _ = vector_store.add_documents(documents=documents)
 
@@ -67,6 +69,9 @@ def get_response_from_query(vector_store, query, upload_id, k=4):
   
   retrieved_content = "\n\n".join(doc.page_content for doc in retrieved_docs)
 
+  with st.expander("Show Retrieved Content"):
+    st.write(retrieved_content)
+  
   llm = ChatOpenAI(model="gpt-4o-mini")
 
   prompt = PromptTemplate(
